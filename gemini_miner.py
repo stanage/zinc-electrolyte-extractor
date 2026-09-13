@@ -30,17 +30,20 @@ Provide your response strictly in the following JSON structure to allow for auto
   "extracted_electrolytes": [
     {
       "electrolyte_designation": "Name or identifier (e.g., Baseline, Electrolyte A)",
+      "DOI": "Paper DOI if available. Starting with https:// so that it is a valid URL, otherwise 'Not Specified'",
       "salts": [],
       "solvents": [],
       "additives": [],
       "salt_concentration": "",
       "solvent_ratio": "",
       "additive_amount": ""
+      "CE": "Coulombic Efficiency if mentioned, otherwise 'Not Specified'",
+      "Ion_Conductivity": "Ion Conductivity if mentioned, otherwise 'Not Specified'",
     }
   ],
   "potential_references": [
     {
-      "in_text_citation": "e.g., [14] or (Smith et al., 2021)",
+      "in_text_citation": "e.g., [14] or (Smith et al., 2021), followed by the DOI of that paper that you can get from the reference section, or a web search of the reference if reference section does not contain the DOI. If you can't get the DOI from both the reference section and a web search, output the reference details. e.g. J. Am. Chem. Soc. 139,9775-9778 (2017).",
       "context_sentence": "Exact sentence from the text mentioning this reference.",
       "reason_for_inclusion": "Brief explanation of why this likely contains electrolyte MD/experimental data."
     }
@@ -77,7 +80,18 @@ def analyze_paper_with_gemini(paper_text):
     return json.loads(response.text)
 
 # 3. Process PDF folder
-pdf_folder = "papers"
+papr_base_dir = os.getenv("PAPERS_BASE_DIR")
+
+if not papr_base_dir:
+    raise ValueError("PAPERS_BASE_DIR is not set in your .env file")
+
+# Append the public folder name
+pdf_folder = os.path.join(papr_base_dir, "To print/check")
+
+# Verify the full path exists
+if not os.path.isdir(pdf_folder):
+    raise FileNotFoundError(f"Directory not found: {pdf_folder}")
+
 all_results = {}
 
 for filename in os.listdir(pdf_folder):
