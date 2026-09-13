@@ -72,7 +72,19 @@ def analyze_paper(text):
     return json.loads(response.choices[0].message.content)
 
 # 3. Process the folder
-pdf_folder = "papers" # Name of your folder containing PDFs
+# 3. Process PDF folder
+papr_base_dir = os.getenv("PAPERS_BASE_DIR")
+
+if not papr_base_dir:
+    raise ValueError("PAPERS_BASE_DIR is not set in your .env file")
+
+# Append the public folder name
+pdf_folder = os.path.join(papr_base_dir, "To print/Zn Papers")
+
+# Verify the full path exists
+if not os.path.isdir(pdf_folder):
+    raise FileNotFoundError(f"Directory not found: {pdf_folder}")
+
 all_results = {}
 
 for filename in os.listdir(pdf_folder):

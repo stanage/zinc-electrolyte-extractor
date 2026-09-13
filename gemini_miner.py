@@ -86,7 +86,7 @@ if not papr_base_dir:
     raise ValueError("PAPERS_BASE_DIR is not set in your .env file")
 
 # Append the public folder name
-pdf_folder = os.path.join(papr_base_dir, "To print/check")
+pdf_folder = os.path.join(papr_base_dir, "To print/Zn Papers")
 
 # Verify the full path exists
 if not os.path.isdir(pdf_folder):
