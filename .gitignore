@@ -1,0 +1,10 @@
+# Ignore secret environment file
+.env
+
+# Ignore temporary Python cache files
+__pycache__/
+*.pyc
+
+# Ignore local PDF papers and output
+papers/
+electrolyte_data.json
