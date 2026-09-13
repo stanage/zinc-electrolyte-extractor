@@ -88,7 +88,7 @@ for filename in os.listdir(pdf_folder):
         all_results[filename] = extracted_data
 
 # 4. Save everything to one master file
-with open("electrolyte_data.json", "w") as f:
+with open("electrolyte_data_openai.json", "w") as f:
     json.dump(all_results, f, indent=4)
 
-print("Extraction complete! Check electrolyte_data.json")
+print("Extraction complete! Check electrolyte_data_openai.json")

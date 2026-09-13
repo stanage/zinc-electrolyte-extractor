@@ -8,3 +8,5 @@ __pycache__/
 # Ignore local PDF papers and output
 papers/
 electrolyte_data.json
+electrolyte_data_openai.json
+electrolyte_data_gemini.json
